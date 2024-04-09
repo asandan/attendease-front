@@ -11,6 +11,8 @@ import authSchema from "./schema/authSchema";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { signup, login } from "@/util";
+import { Card } from "../ui/card";
+import { useToast } from "../ui/use-toast";
 
 export type AuthPageProps = {
   authType: "signup" | "login";
@@ -47,6 +49,7 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
   const { push } = useRouter();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+  const { toast } = useToast();
   const authState = useSelector(authSelectors.getAuth());
 
   const isLogin = authType === "login";
@@ -68,18 +71,35 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
         if (isLogin) {
           const hasLoggedIn = await login(values);
           if (hasLoggedIn) {
-            enqueueSnackbar("Logged in successfully", { variant: "success" });
+            toast({
+              title: "Logged in successfully",
+              description: "You have been logged in.",
+              variant: "positive",
+            });
             push("/");
           } else {
-            enqueueSnackbar("Invalid credentials", { variant: "error" });
+            toast({
+              title: "Error",
+              description: "Invalid credentials",
+              variant: "destructive",
+            });
           }
         } else {
           const hasSignedUp = await signup(values);
           if (hasSignedUp) {
             enqueueSnackbar("Signed up successfully", { variant: "success" });
+            toast({
+              title: "Signed up successfully",
+              description: "You have been signed up.",
+              variant: "positive",
+            })
             push("/auth/login");
           } else {
-            enqueueSnackbar("Unknown error occured", { variant: "error" });
+            toast({
+              title: "Error",
+              description: "Unknown error occured",
+              variant: "destructive",
+            });
           }
         }
       } catch (e) {}
@@ -96,7 +116,7 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
     !Object.keys(errors).length && values.email && values.password;
 
   return (
-    <div className="flex flex-col justify-center items-center h-full ">
+    <div className="flex flex-col justify-center items-center h-[60%] w-[30%] self-center  rounded-xl">
       <Image
         quality={100}
         width={400}
@@ -105,7 +125,9 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
         alt="logo"
       />
       <div className="flex flex-col gap-[3.1em] items-center">
-        <span className={`w-[615px] text-center font-normal ${styles.signin}`}>
+        <span
+          className={`w-[615px] text-center font-normal ${styles.signin} text-red-400`}
+        >
           {PAGE_CONTENT[authType].title}
         </span>
         <form
@@ -122,7 +144,7 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
               onChange={handleChange}
               error={touched.email && !!errors.email}
               errorMessage={errors.email}
-              className="w-[300px] text-black font-bold bg-primary-inputBG rounded-[15px] focus-visible:ring-0"
+              className="w-[300px] text-[#a7a6a6] font-bold bg-pimary-inputBG rounded-[15px] focus-visible:ring-0"
             />
             <Input
               type="password"
@@ -133,7 +155,7 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
               onChange={handleChange}
               error={touched.password && !!errors.password}
               errorMessage={errors.password}
-              className="w-[300px] text-black font-bold bg-primary-inputBG  rounded-[15px] focus-visible:ring-0"
+              className="w-[300px] text-white font-bold bg-primary-inputBG  rounded-[15px] focus-visible:ring-0"
             />
           </div>
           <span>
@@ -143,7 +165,7 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
             </Link>
           </span>
           <Button
-            className="bg-[#000] text-[#fff] w-[75%] rounded-lg"
+            className="w-[75%] rounded-lg"
             disabled={!isValid || isSubmitting}
           >
             {PAGE_CONTENT[authType].buttonText}
