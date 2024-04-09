@@ -4,8 +4,10 @@
 
 body {
   height: 100vh;
+  background-color: black;
 }
 
 #__next {
   height: 100vh;
 }
+
