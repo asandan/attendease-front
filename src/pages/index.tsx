@@ -1,3 +1,4 @@
+import { withSession } from "@/util";
 import styles from "../styles/variables.module.scss";
 
 export default function Home() {
@@ -7,3 +8,7 @@ export default function Home() {
     </div>
   );
 }
+
+export const getServerSideProps = withSession(async function ({ req, res }) {
+  return { props: {} };
+});

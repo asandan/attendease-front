@@ -1,13 +1,16 @@
 import { Input, Button } from "@/components/ui";
 import styles from "./index.module.scss";
 import Image from "next/image";
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 import Link from "next/link";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { selectors as authSelectors } from "@/pages/auth/store";
 import { getAuthData } from "@/pages/auth/store/actions";
 import authSchema from "./schema/authSchema";
+import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
+import { signup, login } from "@/util";
 
 export type AuthPageProps = {
   authType: "signup" | "login";
@@ -41,15 +44,18 @@ const PAGE_CONTENT: PageContent = {
 };
 
 export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
+  const { push } = useRouter();
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const authState = useSelector(authSelectors.getAuth());
+
+  const isLogin = authType === "login";
 
   const {
     values,
-    isValid,
     errors,
     handleBlur,
-    handleChange,
+    handleChange: handleChangeFormik,
     touched,
     isSubmitting,
     handleSubmit,
@@ -57,12 +63,38 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
     initialValues: { ...authState },
     enableReinitialize: true,
     isInitialValid: false,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      try {
+        if (isLogin) {
+          const hasLoggedIn = await login(values);
+          if (hasLoggedIn) {
+            enqueueSnackbar("Logged in successfully", { variant: "success" });
+            push("/");
+          } else {
+            enqueueSnackbar("Invalid credentials", { variant: "error" });
+          }
+        } else {
+          const hasSignedUp = await signup(values);
+          if (hasSignedUp) {
+            enqueueSnackbar("Signed up successfully", { variant: "success" });
+            push("/auth/login");
+          } else {
+            enqueueSnackbar("Unknown error occured", { variant: "error" });
+          }
+        }
+      } catch (e) {}
     },
     validationSchema: authSchema,
   });
-  console.log(errors, values);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(getAuthData.success({ name: e.target.id, value: e.target.value }));
+    handleChangeFormik(e);
+  };
+
+  const isValid =
+    !Object.keys(errors).length && values.email && values.password;
+
   return (
     <div className="flex flex-col justify-center items-center h-full ">
       <Image
@@ -76,32 +108,32 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
         <span className={`w-[615px] text-center font-normal ${styles.signin}`}>
           {PAGE_CONTENT[authType].title}
         </span>
-        <div className="flex flex-col gap-[1.3em] w-[70%] items-center">
+        <form
+          className="flex flex-col gap-[1.3em] w-[70%] items-center"
+          onSubmit={handleSubmit}
+        >
           <div className="flex flex-col gap-[1.3em]">
             <Input
               type="email"
+              id="email"
               placeholder="Login"
-              onChange={(e) =>
-                dispatch(
-                  getAuthData.success({ name: "email", value: e.target.value })
-                )
-              }
+              value={values.email}
+              onBlur={handleBlur}
+              onChange={handleChange}
               error={touched.email && !!errors.email}
+              errorMessage={errors.email}
               className="w-[300px] text-black font-bold bg-primary-inputBG rounded-[15px] focus-visible:ring-0"
             />
             <Input
               type="password"
+              id="password"
               placeholder="Password"
-              onChange={(e) =>
-                dispatch(
-                  getAuthData.success({
-                    name: "password",
-                    value: e.target.value,
-                  })
-                )
-              }
+              onBlur={handleBlur}
+              value={values.password}
+              onChange={handleChange}
               error={touched.password && !!errors.password}
-              className="w-[300px] text-black font-bold bg-primary-inputBG border-none rounded-[15px] focus-visible:ring-0"
+              errorMessage={errors.password}
+              className="w-[300px] text-black font-bold bg-primary-inputBG  rounded-[15px] focus-visible:ring-0"
             />
           </div>
           <span>
@@ -116,7 +148,7 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
           >
             {PAGE_CONTENT[authType].buttonText}
           </Button>
-        </div>
+        </form>
       </div>
     </div>
   );
