@@ -12,43 +12,14 @@ import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { signup, login } from "@/shared/util";
 import { useToast } from "../ui/use-toast";
-
-export type AuthPageProps = {
-  authType: "signup" | "login";
-};
-
-export type PageContent = {
-  [key in AuthPageProps["authType"]]: {
-    title: string;
-    buttonText: string;
-    footerText: string;
-    footerTextSecondary: string;
-    link: string;
-  };
-};
-
-const PAGE_CONTENT: PageContent = {
-  signup: {
-    title: "Sign up",
-    buttonText: "Sign up",
-    footerText: "Already have an account? ",
-    footerTextSecondary: "Sign in here",
-    link: "/auth/login",
-  },
-  login: {
-    title: "Sign in",
-    buttonText: "Login",
-    footerText: "Don't have an account? ",
-    footerTextSecondary: "Sign up here",
-    link: "/auth/signup",
-  },
-};
+import { AuthPageProps } from "@/shared";
+import { PAGE_CONTENT } from "./constants";
 
 export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
-  const { push } = useRouter();
-  const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+  const { push } = useRouter();
   const { toast } = useToast();
+  const dispatch = useDispatch();
   const authState = useSelector(authSelectors.getAuth());
 
   const isLogin = authType === "login";
@@ -91,7 +62,7 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
               title: "Signed up successfully",
               description: "You have been signed up.",
               variant: "positive",
-            })
+            });
             push("/auth/login");
           } else {
             toast({

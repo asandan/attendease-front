@@ -1,1 +1,2 @@
-export * from './root-store';
+export * from './reducer'
+export * from './store'
