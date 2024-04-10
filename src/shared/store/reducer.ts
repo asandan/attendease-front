@@ -1,6 +1,6 @@
 import { combineReducers, AnyAction, Action } from 'redux'
 
-import { reducer as authReducer } from '@/stores/auth-store'
+import { reducer as authReducer } from '@/shared/store/stores/auth-store'
 import { reducer as weekReducer } from '@/shared/store/stores/attendance-store'
 import { AppState } from '@/shared/types/State.interface';
 

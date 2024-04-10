@@ -1,6 +1,6 @@
 import { AuthData } from "@/shared/types/Auth.interface";
 
-export const login = async (data: AuthData): Promise<any> => {
+export const nextAuthLogin = async (data: AuthData): Promise<any> => {
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
 

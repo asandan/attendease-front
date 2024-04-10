@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import NextAuth, { AuthOptions, Session, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { JWT, JWTDecodeParams, JWTEncodeParams } from "next-auth/jwt";
-import { login } from "@/mutations";
+import { nextAuthLogin } from "@/shared/mutations";
 
 export const authOptions: AuthOptions = {
   secret: process.env.NEXT_AUTH_SECRET,
@@ -42,7 +42,7 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials, req) {
         const loginData = credentials;
-        const userData = await login(loginData as any);
+        const userData = await nextAuthLogin(loginData as any);
         return new Promise((res) => res(userData));
       },
     }),

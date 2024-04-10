@@ -1,27 +1,11 @@
 import { LINKS } from "@/shared/util";
 import {
-  ChevronLeft,
-  ChevronRight,
-  Copy,
-  CreditCard,
-  File,
-  Home,
-  LineChart,
-  ListFilter,
   LogOut,
-  MoreVertical,
-  Package,
-  Package2,
-  PanelLeft,
-  Search,
   Settings,
-  ShoppingCart,
-  Truck,
-  Users2,
 } from "lucide-react";
 import Link from "next/link";
+import { useLogout } from "../../shared/hooks";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { useLogout } from "../../hooks";
 import { useToast } from "../ui/use-toast";
 
 export const NavBar = () => {
