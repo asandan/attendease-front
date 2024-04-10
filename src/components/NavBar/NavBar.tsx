@@ -1,4 +1,4 @@
-import { LINKS } from "@/util";
+import { LINKS } from "@/shared/util";
 import {
   ChevronLeft,
   ChevronRight,
@@ -21,12 +21,12 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { useLogout } from "../hooks";
+import { useLogout } from "../../hooks";
 import { useToast } from "../ui/use-toast";
 
 export const NavBar = () => {
-  const { toast } = useToast();
   const logOut = useLogout();
+  const { toast } = useToast();
 
   const handleLogOut = () => {
     logOut();

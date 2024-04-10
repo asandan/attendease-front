@@ -1,4 +1,4 @@
-import { AuthData } from "@/types/Auth.interface";
+import { AuthData } from "@/shared/types/Auth.interface";
 
 export const login = async (data: AuthData): Promise<any> => {
   const headers = new Headers();

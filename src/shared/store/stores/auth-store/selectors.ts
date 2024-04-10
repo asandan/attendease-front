@@ -1,4 +1,4 @@
-import { AppState } from "@/types/State.interface";
+import { AppState } from "@/shared/types/State.interface";
 import { createSelector } from "reselect";
 
 const selectAuthState = (state: AppState) => state.auth;

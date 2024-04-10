@@ -1,4 +1,4 @@
-import { withSession } from "@/util";
+import { withSession } from "@/shared/util";
 import styles from "../styles/variables.module.scss";
 
 export default function Home() {

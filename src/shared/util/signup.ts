@@ -1,4 +1,4 @@
-import { AuthData } from "@/types/Auth.interface";
+import { AuthData } from "@/shared/types/Auth.interface";
 
 
 export const signup = async ({ email, password }: AuthData) => {
