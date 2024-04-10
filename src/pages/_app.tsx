@@ -2,7 +2,7 @@ import { NavBar } from "@/components/NavBar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import configureStore from "@/store/store";
+import configureStore from "@/shared/store/root-store/store";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
@@ -35,13 +35,13 @@ export default function App({
       >
         <SnackbarProvider>
           <TooltipProvider>
-            <main
-              className={`flex flex-row h-[100vh] overflow-hidden justify-center `}
-            >
+            <div className="flex flex-row w-full">
               {!isAuth && <NavBar />}
-              <Component {...pageProps} />
-            </main>
-            <Toaster />
+              <main className={`flex flex-row h-[100vh] overflow-hidden w-full`}>
+                <Component {...pageProps} />
+              </main>
+              <Toaster />
+            </div>
           </TooltipProvider>
         </SnackbarProvider>
       </ThemeProvider>

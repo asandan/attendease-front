@@ -1,7 +1,7 @@
 import { createAsyncAction } from "typesafe-actions"
 import { AUTH_ACTIONS } from "./constants"
 import { DEFAULT_AUTH_STATE } from "./reducer"
-import { ResponseError } from "@/types";
+import { ResponseError } from "@/shared/types";
 
 export type AuthSuccess = {
   name: string,

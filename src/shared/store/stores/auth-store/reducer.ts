@@ -1,11 +1,11 @@
 import { ActionType, createReducer } from "typesafe-actions"
 import * as actions from "./actions"
 import { produce } from "immer"
-import { AuthData } from "@/types/Auth.interface"
+import { AuthData } from "@/shared/types/Auth.interface"
 
 
 
-export const DEFAULT_AUTH_STATE: AuthData = {
+export const  DEFAULT_AUTH_STATE: AuthData = {
   email: "",
   password: "",
 }

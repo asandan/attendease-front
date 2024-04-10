@@ -3,7 +3,8 @@ import {
   Contact,
   LayoutDashboard,
   SearchSlash,
-  Home
+  Home,
+  Calendar
 } from "lucide-react";
 
 export const LINKS = [
@@ -11,6 +12,11 @@ export const LINKS = [
     title: "Home",
     url: "/",
     icon: <Home />,
+  },
+  {
+    title: "My attendance",
+    url: "/attendance",
+    icon: <Calendar />
   },
   {
     title: "Dashboard",

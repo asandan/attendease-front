@@ -5,13 +5,12 @@ import { ChangeEvent, FC } from "react";
 import Link from "next/link";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { selectors as authSelectors } from "@/pages/auth/store";
-import { getAuthData } from "@/pages/auth/store/actions";
+import { selectors as authSelectors } from "@/shared/store/stores/auth-store";
+import { getAuthData } from "@/shared/store/stores/auth-store/actions";
 import authSchema from "./schema/authSchema";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
-import { signup, login } from "@/util";
-import { Card } from "../ui/card";
+import { signup, login } from "@/shared/util";
 import { useToast } from "../ui/use-toast";
 
 export type AuthPageProps = {
