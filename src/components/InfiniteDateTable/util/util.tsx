@@ -1,12 +1,13 @@
 import {
-  DayAttendance,
-  DayAttendanceSchedule,
+  WeekAttendance,
+  WeekAttendanceSchedule,
   GetNextWeek,
+  WeekColumn,
 } from "@/shared/types/Week.interface";
 import { createColumnHelper } from "@tanstack/react-table";
 import { generateWeek } from ".";
 
-export const dayColumnHelper = createColumnHelper<DayAttendanceSchedule>();
+export const dayColumnHelper = createColumnHelper<WeekAttendanceSchedule>();
 
 export const DAYS_DEFAULT_COLUMN = [
   dayColumnHelper.accessor("subject", {
@@ -14,14 +15,14 @@ export const DAYS_DEFAULT_COLUMN = [
   }),
 ];
 
-export const getColumnDefs: GetNextWeek = (startDate: Date) => {
+export const getColumnDefs: GetNextWeek<WeekColumn> = (startDate: Date) => {
   const week = generateWeek(startDate);
 
   const columns = week.map((date) =>
     dayColumnHelper.accessor(`d${date.replaceAll(".", "")}`, {
       header: date,
       cell(props) {
-        const value = props.getValue() as DayAttendance;
+        const value = props.getValue() as WeekAttendance;
         if (!value) return 0;
 
         return (

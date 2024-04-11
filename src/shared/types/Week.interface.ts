@@ -1,23 +1,23 @@
 import { AccessorKeyColumnDef } from "@tanstack/react-table";
 
 export interface WeekState {
-  columns: DayColumn[];
-  rows: DayRow[];
+  columns: WeekColumn[];
+  rows: WeekRow[];
   currentDate: Date;
 }
 
 
-export type DayAttendance = { didAttend: boolean };
+export type WeekAttendance = { didAttend: boolean };
 
-export type DayAttendanceSchedule = {
-  [key: string]: DayAttendance | undefined;
+export type WeekAttendanceSchedule = {
+  [key: string]: WeekAttendance | undefined;
 };
 
-export type DayColumn = AccessorKeyColumnDef<
-  DayAttendanceSchedule,
-  DayAttendance | undefined
+export type WeekColumn = AccessorKeyColumnDef<
+  WeekAttendanceSchedule,
+  WeekAttendance | undefined
 >;
 
-export type DayRow = Record<string, DayAttendance>;
+export type WeekRow = Record<string, WeekAttendance>;
 
-export type GetNextWeek = (startDate: Date) => { columns: DayColumn[] };
+export type GetNextWeek<T> = (startDate: Date) => { columns: T[] };
