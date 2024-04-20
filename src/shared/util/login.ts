@@ -10,7 +10,7 @@ type Login = ({
 
 export const login: Login = async ({ email, password }) => {
   const csrfToken = await getCsrfToken();
-
+  console.log()
   try {
     const response = await fetch(`/api/auth/callback/credentials`, {
       method: "POST",

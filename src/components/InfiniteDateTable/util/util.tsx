@@ -5,7 +5,7 @@ import {
   WeekColumn,
 } from "@/shared/types/Week.interface";
 import { createColumnHelper } from "@tanstack/react-table";
-import { generateWeek } from ".";
+import { WEEK_DAYS } from "@/shared";
 
 export const dayColumnHelper = createColumnHelper<WeekAttendanceSchedule>();
 
@@ -16,18 +16,18 @@ export const DAYS_DEFAULT_COLUMN = [
 ];
 
 export const getColumnDefs: GetNextWeek<WeekColumn> = (startDate: Date) => {
-  const week = generateWeek(startDate);
+  const week = Object.keys(WEEK_DAYS) as (keyof typeof WEEK_DAYS)[];
 
-  const columns = week.map((date) =>
-    dayColumnHelper.accessor(`d${date.replaceAll(".", "")}`, {
-      header: date,
+  const columns = week.map((day) =>
+    dayColumnHelper.accessor(day, {
+      header: WEEK_DAYS[day],
       cell(props) {
         const value = props.getValue() as WeekAttendance;
         if (!value) return 0;
 
         return (
           <span className="flex flex-row">
-            <span>{value.didAttend}</span>
+            <span>{value.ratio}</span>
           </span>
         );
       },

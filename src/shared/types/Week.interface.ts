@@ -1,16 +1,15 @@
+import { WEEK_DAYS } from './../util/constants';
 import { AccessorKeyColumnDef } from "@tanstack/react-table";
 
 export interface WeekState {
-  columns: WeekColumn[];
   rows: WeekRow[];
-  currentDate: Date;
+  currentWeek: number;
 }
 
-
-export type WeekAttendance = { didAttend: boolean };
+export type WeekAttendance = { ratio: number };
 
 export type WeekAttendanceSchedule = {
-  [key: string]: WeekAttendance | undefined;
+  [key in keyof typeof WEEK_DAYS | "subject"]: WeekAttendance | undefined;
 };
 
 export type WeekColumn = AccessorKeyColumnDef<

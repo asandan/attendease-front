@@ -26,7 +26,7 @@ export default function App({
   }, []);
 
   return (
-    <Provider store={store}>
+    <Provider  store={store}>
       <ThemeProvider
         attribute="class"
         defaultTheme="dark"
@@ -37,7 +37,7 @@ export default function App({
           <TooltipProvider>
             <div className="flex flex-row w-full">
               {!isAuth && <NavBar />}
-              <main className={`flex flex-row h-[100vh] overflow-hidden w-full`}>
+              <main className={`flex flex-row h-[100vh] overflow-hidden w-full justify-center`}>
                 <Component {...pageProps} />
               </main>
               <Toaster />
