@@ -1,4 +1,4 @@
-import { combineReducers, AnyAction, Action } from 'redux'
+import { combineReducers, AnyAction } from 'redux'
 
 import { reducer as authReducer } from '@/shared/store/stores/auth-store'
 import { reducer as weekReducer } from '@/shared/store/stores/attendance-store'

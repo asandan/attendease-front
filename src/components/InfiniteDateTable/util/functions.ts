@@ -1,23 +1,21 @@
+import { GetNextWeek, WeekColumn } from "@/shared";
+
 export const generateColumns = (
   startDate: Date,
   defaultColumns: any[],
-  getColumnDefs: any
+  getColumnDefs: GetNextWeek<WeekColumn>
 ) => {
   const { columns } = getColumnDefs(startDate);
   const newColumns = [...defaultColumns, ...columns];
   return newColumns;
 };
 
-export const getDateOneWeekAgo = (date: Date) => {
-  const newDate = new Date(date);
-  newDate.setDate(newDate.getDate() - 7);
-  return newDate;
+export const getDateOneWeekAgo = (week: number) => {
+  return week - 1;
 };
 
-export const getDateOneWeekLater = (date: Date) => {
-  const newDate = new Date(date);
-  newDate.setDate(newDate.getDate() + 7);
-  return newDate;
+export const getDateOneWeekLater = (week: number) => {
+  return week + 1;
 };
 
 export const generateWeek = (startDate: Date): string[] => {

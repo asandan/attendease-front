@@ -5,7 +5,7 @@ export const nextAuthLogin = async (data: AuthData): Promise<any> => {
   headers.append("Content-Type", "application/json");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/auth/signin`,
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/signin`,
     {
       method: "POST",
       headers,

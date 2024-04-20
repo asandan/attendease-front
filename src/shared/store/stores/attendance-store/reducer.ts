@@ -3,21 +3,17 @@ import { WeekState } from "@/shared/types";
 import { produce } from "immer";
 import { ActionType, createReducer } from "typesafe-actions";
 import * as actions from "./actions";
-import { TODAY } from "@/shared/util";
-
-
+import { getWeeksPassed, SECOND_SEMESTER_START_DATE } from "@/shared/util";
 
 export const DEFAULT_WEEK_STATE: WeekState = {
-  columns: generateColumns(TODAY, DAYS_DEFAULT_COLUMN, getColumnDefs),
-  currentDate: TODAY,
+  currentWeek: getWeeksPassed(SECOND_SEMESTER_START_DATE),
   rows: [],
 }
 
 const reducer = createReducer<typeof DEFAULT_WEEK_STATE, ActionType<typeof actions>>(DEFAULT_WEEK_STATE)
   .handleAction(actions.getWeek.success, (state, action) => produce(state, (nextState) => {
     const { payload } = action
-    nextState.columns = payload.columns
-    nextState.currentDate = payload.currentDate
+    nextState.currentWeek = payload?.currentWeek
   }))
 
 export default reducer;

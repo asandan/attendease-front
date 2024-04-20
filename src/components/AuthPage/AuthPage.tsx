@@ -57,7 +57,6 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
         } else {
           const hasSignedUp = await signup(values);
           if (hasSignedUp) {
-            enqueueSnackbar("Signed up successfully", { variant: "success" });
             toast({
               title: "Signed up successfully",
               description: "You have been signed up.",
