@@ -2,7 +2,7 @@ import { WEEK_DAYS } from './../util/constants';
 import { AccessorKeyColumnDef } from "@tanstack/react-table";
 
 export interface WeekState {
-  rows: WeekRow[];
+  rows: any[];
   currentWeek: number;
 }
 

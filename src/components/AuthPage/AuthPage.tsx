@@ -9,14 +9,12 @@ import { selectors as authSelectors } from "@/shared/store/stores/auth-store";
 import { getAuthData } from "@/shared/store/stores/auth-store/actions";
 import authSchema from "./schema/authSchema";
 import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
 import { signup, login } from "@/shared/util";
 import { useToast } from "../ui/use-toast";
 import { AuthPageProps } from "@/shared";
 import { PAGE_CONTENT } from "./constants";
 
 export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
-  const { enqueueSnackbar } = useSnackbar();
   const { push } = useRouter();
   const { toast } = useToast();
   const dispatch = useDispatch();
@@ -113,7 +111,7 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
               onChange={handleChange}
               error={touched.email && !!errors.email}
               errorMessage={errors.email}
-              className="w-[300px] text-[#a7a6a6] font-bold bg-pimary-inputBG rounded-[15px] focus-visible:ring-0"
+              className="w-[300px] text-[#fff] font-bold bg-pimary-inputBG rounded-[15px] focus-visible:ring-0"
             />
             <Input
               type="password"
