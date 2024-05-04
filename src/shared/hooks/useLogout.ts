@@ -6,6 +6,5 @@ export const useLogout = () => {
     await signOut({
       redirect: true,
     });
-    localStorage.removeItem("userId")
   }, []);
 };

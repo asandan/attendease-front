@@ -22,13 +22,11 @@ export default function App({
   const isAuth = router.pathname.startsWith("/auth");
   const isAuthPage = router.pathname.startsWith("/auth");
 
-  console.log(session)
 
   useEffect(() => {
     if (!session && !isAuthPage) {
       router.push("/auth/signin");
     }
-    localStorage.setItem("userId", session?.user?.id)
   }, []);
 
   return (
