@@ -15,8 +15,8 @@ export const WeekDropdown: FC<WeekDropdownProps> = ({ items, onChange }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Weeks</DropdownMenuLabel>
-        {items.map((el: any) =>
-          <DropdownMenuItem onClick={() => onChange(el)}>
+        {items.map((el: any, i) =>
+          <DropdownMenuItem onClick={() => onChange(el)} key={i}>
             <span>{el}</span>
           </DropdownMenuItem>
         )}
