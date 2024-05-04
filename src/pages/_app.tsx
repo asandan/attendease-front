@@ -25,6 +25,7 @@ export default function App({
 
   useEffect(() => {
     if (!session && !isAuthPage) {
+      router.prefetch("/auth/signin", "/auth/signin", { priority: true })
       router.push("/auth/signin");
     }
   }, []);

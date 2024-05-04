@@ -15,11 +15,10 @@ import { AuthPageProps } from "@/shared";
 import { PAGE_CONTENT } from "./constants";
 
 export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
-  const { push } = useRouter();
+  const { push, prefetch } = useRouter();
   const { toast } = useToast();
   const dispatch = useDispatch();
   const authState = useSelector(authSelectors.getAuth());
-
   const isLogin = authType === "login";
 
   const {
@@ -44,6 +43,7 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
               description: "You have been logged in.",
               variant: "positive",
             });
+            await prefetch("/", "/", { priority: true })
             push("/");
           } else {
             toast({
@@ -69,7 +69,7 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
             });
           }
         }
-      } catch (e) {}
+      } catch (e) { }
     },
     validationSchema: authSchema,
   });
