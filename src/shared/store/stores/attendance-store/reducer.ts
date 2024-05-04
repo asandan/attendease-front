@@ -13,7 +13,14 @@ export const DEFAULT_WEEK_STATE: WeekState = {
 const reducer = createReducer<typeof DEFAULT_WEEK_STATE, ActionType<typeof actions>>(DEFAULT_WEEK_STATE)
   .handleAction(actions.getWeek.success, (state, action) => produce(state, (nextState) => {
     const { payload } = action
+    console.log("payload", payload)
     nextState.currentWeek = payload?.currentWeek
   }))
+  .handleAction(actions.getRows.success, (state, action) => produce(state, (nextState) => {
+    const { payload } = action
+    console.log("PATYLODA", payload)
+    nextState.rows = payload
+  }))
+
 
 export default reducer;

@@ -13,6 +13,7 @@ export const authOptions: AuthOptions = {
         id: token?.id,
         name: token?.name,
         email: token?.email,
+        roleId: token?.roleId,
       };
       return jwt.sign(jwtClaims, secret, {
         expiresIn: "1h",
@@ -49,14 +50,19 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }: { token: any; user: any }) {
+      console.log(user)
       if (user) {
         token.accessToken = user.token;
       }
-      
+
       if (user?.id) {
         token.id = user.id;
       }
 
+      if (user?.roleId) {
+        token.roleId = user.roleId
+      }
+      console.log("TOKEN", token)
       return Promise.resolve(token);
     },
     async session({ session, token }) {

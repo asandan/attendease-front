@@ -11,10 +11,12 @@ export const generateColumns = (
 };
 
 export const getDateOneWeekAgo = (week: number) => {
+  if( week === 1) return 1
   return week - 1;
 };
 
 export const getDateOneWeekLater = (week: number) => {
+  if( week === 15) return 15
   return week + 1;
 };
 

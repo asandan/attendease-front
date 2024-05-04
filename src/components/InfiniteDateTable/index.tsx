@@ -1,20 +1,23 @@
 import { Table } from "../Table";
 import { FC, MouseEvent, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { ScrollArea } from "../ui/scroll-area";
 import {
   ColumnDef,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { getDateOneWeekAgo, getDateOneWeekLater } from "./util";
+import { WEEKS_LIST, getDateOneWeekAgo, getDateOneWeekLater } from "./util";
 import { useDispatch, useSelector } from "react-redux";
 import { selectors as weekSelectors } from "@/shared/store/stores/attendance-store";
 import {
+  getRows,
   getWeek,
   WeekSuccess,
 } from "@/shared/store/stores/attendance-store/actions";
 import { WeekRow } from "@/shared";
+import { Button } from "../ui";
+import { WeekDropdown } from "./components";
+import { api } from "@/api";
 
 export type InfiniteDateTableProps = {
   columns: ColumnDef<WeekRow, any>[];
@@ -23,10 +26,11 @@ export type InfiniteDateTableProps = {
 export const InfiniteDateTable: FC<InfiniteDateTableProps> = ({ columns }) => {
   const dispatch = useDispatch();
   const { currentWeek, rows } = useSelector(weekSelectors.getWeek());
+  const userId = 1;
 
-  // useEffect(() => {
-  //   dispatch(getWeek.request(undefined));
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getRows.request(undefined));
+  }, [dispatch, currentWeek]);
 
 
   const data = useReactTable({
@@ -51,22 +55,40 @@ export const InfiniteDateTable: FC<InfiniteDateTableProps> = ({ columns }) => {
     dispatch(getWeek.success(payload));
   };
 
+  const handleWeekChange = (w: number) => {
+    dispatch(getWeek.success({ currentWeek: w }))
+  }
+
+  const markMyself = async () => {
+    try {
+      await api.markMyself(+userId)()
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return (
-    <div className="flex flex-col w-full px-6 py-4">
-      <span>
-        Current week: <span className="font-bold">{currentWeek}</span>
-      </span>
-      <div className="flex flex-row">
+    <div className="flex flex-col w-full px-6 py-4 gap-3">
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-row gap-8">
+          <span className="ml-9 font-semibold self-center">
+            Current week: <span className="font-bold">{currentWeek}</span>
+          </span>
+          <WeekDropdown items={WEEKS_LIST} onChange={handleWeekChange} />
+        </div>
+        <Button variant="outline" className="w-24 h-8 mr-10 dark:bg-black" onClick={markMyself}>Mark myself</Button>
+      </div>
+      <div className="flex flex-row w-full">
         <ChevronLeft
-          className="mt-9 mr-3 cursor-pointer"
+          className="mt-5 mr-3 cursor-pointer"
           data-direction="left"
           onClick={handleClick}
         />
-        <ScrollArea className="w-full">
+        <div className="flex flex-row border rounded-lg px-4 py-2 w-full">
           <Table table={data} />
-        </ScrollArea>
+        </div>
         <ChevronRight
-          className="mt-9 ml-3 cursor-pointer"
+          className="mt-5 ml-3 cursor-pointer"
           data-direction="right"
           onClick={handleClick}
         />
