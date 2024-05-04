@@ -7,14 +7,18 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { getDateOneWeekAgo, getDateOneWeekLater } from "./util";
+import { WEEKS_LIST, getDateOneWeekAgo, getDateOneWeekLater } from "./util";
 import { useDispatch, useSelector } from "react-redux";
 import { selectors as weekSelectors } from "@/shared/store/stores/attendance-store";
 import {
+  getRows,
   getWeek,
   WeekSuccess,
 } from "@/shared/store/stores/attendance-store/actions";
 import { WeekRow } from "@/shared";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuShortcut, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { Button } from "../ui";
+import { WeekDropdown } from "./components";
 
 export type InfiniteDateTableProps = {
   columns: ColumnDef<WeekRow, any>[];
@@ -23,10 +27,11 @@ export type InfiniteDateTableProps = {
 export const InfiniteDateTable: FC<InfiniteDateTableProps> = ({ columns }) => {
   const dispatch = useDispatch();
   const { currentWeek, rows } = useSelector(weekSelectors.getWeek());
+  console.log("GETWEEK", currentWeek, rows)
 
-  // useEffect(() => {
-  //   dispatch(getWeek.request(undefined));
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getRows.request(undefined));
+  }, [dispatch, currentWeek]);
 
 
   const data = useReactTable({
@@ -51,22 +56,29 @@ export const InfiniteDateTable: FC<InfiniteDateTableProps> = ({ columns }) => {
     dispatch(getWeek.success(payload));
   };
 
+  const handleWeekChange = (w: number) => {
+    dispatch(getWeek.success({ currentWeek: w }))
+  }
+
   return (
-    <div className="flex flex-col w-full px-6 py-4">
-      <span>
-        Current week: <span className="font-bold">{currentWeek}</span>
-      </span>
-      <div className="flex flex-row">
+    <div className="flex flex-col w-full px-6 py-4 gap-3">
+      <div className="flex flex-row gap-8">
+        <span className="ml-9 font-semibold self-center">
+          Current week: <span className="font-bold">{currentWeek}</span>
+        </span>
+        <WeekDropdown items={WEEKS_LIST} onChange={handleWeekChange} />
+      </div>
+      <div className="flex flex-row w-full">
         <ChevronLeft
-          className="mt-9 mr-3 cursor-pointer"
+          className="mt-5 mr-3 cursor-pointer"
           data-direction="left"
           onClick={handleClick}
         />
-        <ScrollArea className="w-full">
+        <div className="flex flex-row border rounded-lg px-4 py-2 w-full">
           <Table table={data} />
-        </ScrollArea>
+        </div>
         <ChevronRight
-          className="mt-9 ml-3 cursor-pointer"
+          className="mt-5 ml-3 cursor-pointer"
           data-direction="right"
           onClick={handleClick}
         />

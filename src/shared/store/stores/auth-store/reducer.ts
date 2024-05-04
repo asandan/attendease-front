@@ -3,9 +3,7 @@ import * as actions from "./actions"
 import { produce } from "immer"
 import { AuthData } from "@/shared/types/Auth.interface"
 
-
-
-export const  DEFAULT_AUTH_STATE: AuthData = {
+export const DEFAULT_AUTH_STATE: AuthData = {
   email: "",
   password: "",
 }
