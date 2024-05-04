@@ -2,14 +2,13 @@ import { api } from '@/api'
 import { call, put, select, takeLatest } from 'redux-saga/effects'
 import { ResponseError } from '@/shared/types'
 import { selectors as weekSelectors } from "@/shared/store/stores/attendance-store";
-import { getRows, getWeek } from './actions';
+import { getRows } from './actions';
 
 function* fetchAttendanceTable() {
   try {
     //@ts-ignore
     const { currentWeek } = yield select(weekSelectors.getWeek())
-    const userId = localStorage.getItem("userId")
-    console.log(userId)
+    const userId = 1
     //@ts-ignore
     const response = yield call(api.getAttendanceRows, {
       userId,

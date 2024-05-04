@@ -1,7 +1,6 @@
 import { Table } from "../Table";
 import { FC, MouseEvent, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { ScrollArea } from "../ui/scroll-area";
 import {
   ColumnDef,
   getCoreRowModel,
@@ -16,9 +15,9 @@ import {
   WeekSuccess,
 } from "@/shared/store/stores/attendance-store/actions";
 import { WeekRow } from "@/shared";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuShortcut, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui";
 import { WeekDropdown } from "./components";
+import { api } from "@/api";
 
 export type InfiniteDateTableProps = {
   columns: ColumnDef<WeekRow, any>[];
@@ -27,7 +26,7 @@ export type InfiniteDateTableProps = {
 export const InfiniteDateTable: FC<InfiniteDateTableProps> = ({ columns }) => {
   const dispatch = useDispatch();
   const { currentWeek, rows } = useSelector(weekSelectors.getWeek());
-  console.log("GETWEEK", currentWeek, rows)
+  const userId = 1;
 
   useEffect(() => {
     dispatch(getRows.request(undefined));
@@ -60,13 +59,24 @@ export const InfiniteDateTable: FC<InfiniteDateTableProps> = ({ columns }) => {
     dispatch(getWeek.success({ currentWeek: w }))
   }
 
+  const markMyself = async () => {
+    try {
+      await api.markMyself(+userId)()
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return (
     <div className="flex flex-col w-full px-6 py-4 gap-3">
-      <div className="flex flex-row gap-8">
-        <span className="ml-9 font-semibold self-center">
-          Current week: <span className="font-bold">{currentWeek}</span>
-        </span>
-        <WeekDropdown items={WEEKS_LIST} onChange={handleWeekChange} />
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-row gap-8">
+          <span className="ml-9 font-semibold self-center">
+            Current week: <span className="font-bold">{currentWeek}</span>
+          </span>
+          <WeekDropdown items={WEEKS_LIST} onChange={handleWeekChange} />
+        </div>
+        <Button variant="outline" className="w-24 h-8 mr-10 dark:bg-black" onClick={markMyself}>Mark myself</Button>
       </div>
       <div className="flex flex-row w-full">
         <ChevronLeft
