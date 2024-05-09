@@ -16,7 +16,7 @@ import {
 } from "@/shared/store/stores/attendance-store/actions";
 import { WeekRow } from "@/shared";
 import { Button } from "../ui";
-import { WeekDropdown } from "./components";
+import { Dropdown } from "./components";
 import { api } from "@/api";
 
 export type InfiniteDateTableProps = {
@@ -74,7 +74,7 @@ export const InfiniteDateTable: FC<InfiniteDateTableProps> = ({ columns }) => {
           <span className="ml-9 font-semibold self-center">
             Current week: <span className="font-bold">{currentWeek}</span>
           </span>
-          <WeekDropdown items={WEEKS_LIST} onChange={handleWeekChange} />
+          <Dropdown title="Weeks" buttonTitle="Select week" items={WEEKS_LIST} onChange={handleWeekChange} />
         </div>
         <Button variant="outline" className="w-24 h-8 mr-10 dark:bg-black" onClick={markMyself}>Mark myself</Button>
       </div>
