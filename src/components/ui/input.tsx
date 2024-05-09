@@ -12,7 +12,7 @@ export interface InputProps
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, icon, type, error, errorMessage, ...props }, ref) => {
     return (
-      <div className="justify-between">
+      <div className="justify-between cursor-pointer">
         <input
           type={type}
           id="shadcn-input"
