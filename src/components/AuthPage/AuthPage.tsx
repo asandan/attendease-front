@@ -7,12 +7,13 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { selectors as authSelectors } from "@/shared/store/stores/auth-store";
 import { getAuthData } from "@/shared/store/stores/auth-store/actions";
-import authSchema from "./schema/authSchema";
+import authSchema from "./schema/auth.schema";
 import { useRouter } from "next/router";
 import { signup, login } from "@/shared/util";
 import { useToast } from "../ui/use-toast";
 import { AuthPageProps } from "@/shared";
 import { PAGE_CONTENT } from "./constants";
+import { getUser } from "@/shared/store/stores/user-store/actions";
 
 export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
   const { push, prefetch } = useRouter();
@@ -43,7 +44,7 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
               description: "You have been logged in.",
               variant: "positive",
             });
-            await prefetch("/", "/", { priority: true })
+            await prefetch("/", "/", { priority: true });
             push("/");
           } else {
             toast({
@@ -69,7 +70,9 @@ export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
             });
           }
         }
-      } catch (e) { }
+      } catch (e) {
+        console.log(e);
+      }
     },
     validationSchema: authSchema,
   });

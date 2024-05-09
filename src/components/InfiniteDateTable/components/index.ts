@@ -1,1 +1,1 @@
-export * from './WeekDropdown';
+export * from './Dropdown';

@@ -50,7 +50,6 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }: { token: any; user: any }) {
-      console.log(user)
       if (user) {
         token.accessToken = user.token;
       }
@@ -62,7 +61,7 @@ export const authOptions: AuthOptions = {
       if (user?.roleId) {
         token.roleId = user.roleId
       }
-      console.log("TOKEN", token)
+      console.log("OKEN", token)
       return Promise.resolve(token);
     },
     async session({ session, token }) {

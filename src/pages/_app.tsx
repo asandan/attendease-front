@@ -3,9 +3,10 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import configureStore from "@/shared/store/store";
-import { getAuthData } from "@/shared/store/stores/auth-store/actions";
+import { UserProvider } from "@/shared/user";
+import { QueryClient } from "@/shared/util/HOCs";
 import "@/styles/globals.css";
-import { useSession } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { SnackbarProvider } from "notistack";
@@ -19,37 +20,41 @@ export default function App({
   const router = useRouter();
   const { store } = configureStore();
 
-  const isAuth = router.pathname.startsWith("/auth");
   const isAuthPage = router.pathname.startsWith("/auth");
-
 
   useEffect(() => {
     if (!session && !isAuthPage) {
-      router.prefetch("/auth/signin", "/auth/signin", { priority: true })
+      router.prefetch("/auth/signin", "/auth/signin", { priority: true });
       router.push("/auth/signin");
     }
   }, []);
 
   return (
-    <Provider store={store}>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="dark"
-        enableSystem
-        disableTransitionOnChange
-      >
-        <SnackbarProvider>
-          <TooltipProvider>
-            <div className="flex flex-row w-full">
-              {!isAuth && <NavBar />}
-              <main className={`flex flex-row h-[100vh] overflow-hidden w-full justify-center`}>
-                <Component {...pageProps} />
-              </main>
-              <Toaster />
-            </div>
-          </TooltipProvider>
-        </SnackbarProvider>
-      </ThemeProvider>
-    </Provider>
+    <SessionProvider session={session}>
+      <Provider store={store}>
+        <QueryClient>
+          <UserProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <TooltipProvider>
+                <div className="flex flex-row w-full">
+                  {!isAuthPage && <NavBar />}
+                  <main
+                    className={`flex flex-row h-[100vh] overflow-hidden w-full justify-center`}
+                  >
+                    <Component {...pageProps} />
+                  </main>
+                  <Toaster />
+                </div>
+              </TooltipProvider>
+            </ThemeProvider>
+          </UserProvider>
+        </QueryClient>
+      </Provider>
+    </SessionProvider>
   );
 }

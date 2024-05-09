@@ -31,7 +31,6 @@ export const getColumnDefs: GetNextWeek<WeekColumn> = () => {
       cell(props) {
         const value = props.getValue() as WeekAttendance;
         if (!value) return 'N/A';
-        console.log("v", value)
         return (
           <span className={`flex flex-row font-semibold ${getColorByPercentage(+value)}`}>
             <span>{+value * 100}%</span>

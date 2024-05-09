@@ -1,3 +1,10 @@
-export default function Dashboard() {
-  return <h1>Hello world!</h1>
+import { MedicalCertification } from "@/components/MedicalCertification";
+import { withSession } from "@/shared";
+
+export default function Dashboard(props: any) {
+  return <MedicalCertification />;
 }
+
+export const getServerSideProps = withSession(async function ({ req, res }) {
+  return { props: {} };
+});
