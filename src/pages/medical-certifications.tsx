@@ -1,7 +1,7 @@
 import { MedicalCertification } from "@/components/MedicalCertification";
 import { withSession } from "@/shared";
 
-export default function Dashboard(props: any) {
+export default function Dashboard() {
   return <MedicalCertification />;
 }
 

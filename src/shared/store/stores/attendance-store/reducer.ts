@@ -1,12 +1,11 @@
-import { DAYS_DEFAULT_COLUMN, generateColumns, getColumnDefs } from "@/components/InfiniteDateTable/util";
 import { WeekState } from "@/shared/types";
 import { produce } from "immer";
 import { ActionType, createReducer } from "typesafe-actions";
 import * as actions from "./actions";
-import { getWeeksPassed, SECOND_SEMESTER_START_DATE } from "@/shared/util";
+import { getWeeksPassed } from "@/shared/util";
 
 export const DEFAULT_WEEK_STATE: WeekState = {
-  currentWeek: getWeeksPassed(SECOND_SEMESTER_START_DATE),
+  currentWeek: getWeeksPassed(new Date()),
   rows: [],
 }
 

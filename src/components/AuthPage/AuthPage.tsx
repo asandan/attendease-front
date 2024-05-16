@@ -13,13 +13,15 @@ import { signup, login } from "@/shared/util";
 import { useToast } from "../ui/use-toast";
 import { AuthPageProps } from "@/shared";
 import { PAGE_CONTENT } from "./constants";
-import { getUser } from "@/shared/store/stores/user-store/actions";
 
 export const AuthPage: FC<AuthPageProps> = ({ authType }) => {
   const { push, prefetch } = useRouter();
   const { toast } = useToast();
+  
   const dispatch = useDispatch();
+
   const authState = useSelector(authSelectors.getAuth());
+  
   const isLogin = authType === "login";
 
   const {

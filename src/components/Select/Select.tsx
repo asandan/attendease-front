@@ -9,7 +9,14 @@ import {
 } from "@/components/ui/select";
 import { FC, useState } from "react";
 import { Label } from "../ui/label";
-import { HandleMedicalCertificationChange } from "@/shared";
+import {
+  AppState,
+  AppSubStates,
+  HandleMedicalCertificationChange,
+  MedicalCertificationAdminState,
+  MedicalCertificationState,
+} from "@/shared";
+import { getConditionalColor } from "./getConditionalColor";
 
 export type SelectProps = {
   items: {
@@ -18,7 +25,16 @@ export type SelectProps = {
   }[];
   label: string;
   value: string | undefined;
-  handleChange: HandleMedicalCertificationChange;
+  state: AppSubStates;
+  disabled?: boolean;
+  width?: string;
+  containerWidth?: string;
+  withTopLabel?: boolean;
+  defaultValue?: string;
+  handleChange:
+    | HandleMedicalCertificationChange
+    | ((name: string, status: string) => void);
+  paintItems?: (criteria: any) => string;
 };
 
 export const Select: FC<SelectProps> = ({
@@ -26,26 +42,48 @@ export const Select: FC<SelectProps> = ({
   handleChange,
   label,
   value,
+  state,
+  containerWidth = "w-full",
+  width = "w-full",
+  withTopLabel = true,
+  defaultValue = "",
+  disabled = false,
+  paintItems,
 }) => {
+  const valueColor = getConditionalColor(
+    paintItems,
+    value || defaultValue,
+    "font-semibold"
+  );
+  console.log(value, defaultValue);
+  const placeholder = `Select ${label.toLowerCase()}`;
+  console.log(value || placeholder);
   return (
-    <div className="w-full flex flex-col gap-1.5">
-      <Label>{label}</Label>
+    <div className={`${containerWidth} flex flex-col gap-1.5`}>
+      {withTopLabel && <Label>{label}</Label>}
       <SelectComponent
-        onValueChange={(value) => handleChange("subjectId", value)}
+        onValueChange={(value) => handleChange(state, value)}
+        disabled={disabled}
+        defaultValue={defaultValue}
       >
-        <SelectTrigger className="w-full" value={value}>
-          <SelectValue placeholder={`Select a ${label.toLowerCase()}`}>
-            {value}
+        <SelectTrigger className={`${width} self-end`}>
+          <SelectValue placeholder={placeholder}>
+            <span className={valueColor}>{value || placeholder}</span>
           </SelectValue>
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
             <SelectLabel>{label}</SelectLabel>
-            {items.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
-                {item.label}
-              </SelectItem>
-            ))}
+            {items.map((item) => {
+              const color = paintItems
+                ? `font-semibold ${paintItems(item.label)}`
+                : "";
+              return (
+                <SelectItem key={item.value} value={item.value}>
+                  <span className={color}>{item.label}</span>
+                </SelectItem>
+              );
+            })}
           </SelectGroup>
         </SelectContent>
       </SelectComponent>

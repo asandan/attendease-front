@@ -1,9 +1,9 @@
 import { DatePicker } from "@/components/DatePicker";
-import { InputFile } from "@/components/InputFile";
 import { Select } from "@/components/Select";
 import { Button } from "@/components/ui";
 import {
   API,
+  getListValue,
   getSelectList,
   HandleMedicalCertificationChange,
   METHODS,
@@ -11,18 +11,24 @@ import {
 } from "@/shared";
 import axios from "axios";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { ForwardedRef, LegacyRef, Ref, useRef, useState } from "react";
 import { TextArea } from "../TextArea";
 import { useDispatch, useSelector } from "react-redux";
-import { getMedicalCertification } from "@/shared/store/stores/medical-certification-store/actions";
+import {
+  clearMedicalCertificationState,
+  getMedicalCertification,
+} from "@/shared/store/stores/medical-certification-store/actions";
 import { selectors as medicalCertificationSelector } from "@/shared/store/stores/medical-certification-store";
-import { selectors } from "@/shared/store/stores/user-store";
 import medicalCertificationSchema from "./schema/medical-certification.schema";
 import { useQuery } from "@tanstack/react-query";
 import request from "@/shared/util/request";
+import { useSession } from "next-auth/react";
+import { api } from "@/api";
+import { InputFile } from "../InputFile";
 
 export const MedicalCertification = () => {
   const dispatch = useDispatch();
+  const ref = useRef<any>(null) ;
 
   const medicalCertificationsStore = useSelector(
     medicalCertificationSelector.getMedicalCertification()
@@ -37,25 +43,27 @@ export const MedicalCertification = () => {
     };
   }>({
     queryKey: ["subjects"],
-    queryFn: request(METHODS.GET, API.SUBJECT.GET_SUBJECTS(0, 1000)),
+    queryFn: api.getSubjects(),
   });
 
   const subjects = getSelectList(data?.data.data || []);
 
-  const { file, description, date, subjectId } = medicalCertificationsStore;
+  const { file, description, startDate, endDate, subjectId } = medicalCertificationsStore;
 
-  const { id: userId } = useSelector(selectors.getUser());
+  const session = useSession() as any;
+
+  const userId = session.data.user.id;
 
   const { values, isSubmitting, handleSubmit } = useFormik({
     initialValues: { ...medicalCertificationsStore },
     isInitialValid: false,
     enableReinitialize: true,
     validationSchema: medicalCertificationSchema,
-    onSubmit: async () => {
+    onSubmit: async (e) => {
       const formData = new FormData();
 
       formData.append("image", file);
-      formData.append("userId", userId);
+      formData.append("userId", `${userId}`);
       formData.append("description", description);
 
       try {
@@ -69,7 +77,11 @@ export const MedicalCertification = () => {
           }
         );
 
-        console.log("Image uploaded:", response.data);
+        if (response) {
+          dispatch(clearMedicalCertificationState.success(null));
+          if (ref && ref.current && ref.current) ref.current.value = "";
+          console.log("Image uploaded:", response.data);
+        }
       } catch (error) {
         console.error("Error uploading image:", error);
       }
@@ -81,10 +93,9 @@ export const MedicalCertification = () => {
   };
 
   const isValid =
-    values.date && values.description && values.file && values.subjectId;
+    values.startDate && values.endDate && values.description && values.file && values.subjectId;
 
-  const value = subjectId ? subjects.find((subject) => subject.value === +subjectId)?.label : undefined;
-  console.log(value);
+  const value = getListValue(subjects, subjectId);
 
   return (
     <form
@@ -93,13 +104,19 @@ export const MedicalCertification = () => {
     >
       <Select
         items={subjects}
-        value={`${value}`}
+        value={value}
         handleChange={handleChange}
+        state="subjectId"
         label="Subject"
       />
-      <DatePicker date={date} handleChange={handleChange} label="Date" />
-      <InputFile handleChange={handleChange} />
-      <TextArea handleChange={handleChange} label="Description" />
+      <DatePicker date={startDate} handleChange={handleChange} label="Start date" state="startDate"/>
+      <DatePicker date={endDate} handleChange={handleChange} label="End date" state="endDate" />
+      <InputFile handleChange={handleChange} ref={ref} />
+      <TextArea
+        handleChange={handleChange}
+        label="Description"
+        value={description}
+      />
       <Button
         className="w-full"
         variant="outline"

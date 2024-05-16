@@ -14,27 +14,31 @@ import {
   getWeek,
   WeekSuccess,
 } from "@/shared/store/stores/attendance-store/actions";
-import { WeekRow } from "@/shared";
+import { GetAttendanceRowsResponse, WeekRow } from "@/shared";
 import { Button } from "../ui";
 import { Dropdown } from "./components";
 import { api } from "@/api";
+import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 
 export type InfiniteDateTableProps = {
-  columns: ColumnDef<WeekRow, any>[];
+  columns: ColumnDef<GetAttendanceRowsResponse, any>[];
 };
 
 export const InfiniteDateTable: FC<InfiniteDateTableProps> = ({ columns }) => {
   const dispatch = useDispatch();
-  const { currentWeek, rows } = useSelector(weekSelectors.getWeek());
-  const userId = 1;
+  const { currentWeek } = useSelector(weekSelectors.getWeek());
+  const session = useSession() as any;
+  const userId = session.data.user.id;
 
-  useEffect(() => {
-    dispatch(getRows.request(undefined));
-  }, [dispatch, currentWeek]);
 
+  // const { data: rows } = useQuery<{ data: GetAttendanceRowsResponse[] }>({
+  //   queryKey: ["attendance-rows", currentWeek],
+  //   queryFn: api.getAttendanceRows({ userId, currentWeek }),
+  // });
 
   const data = useReactTable({
-    data: rows,
+    data: [] || [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -55,17 +59,17 @@ export const InfiniteDateTable: FC<InfiniteDateTableProps> = ({ columns }) => {
     dispatch(getWeek.success(payload));
   };
 
-  const handleWeekChange = (w: number) => {
-    dispatch(getWeek.success({ currentWeek: w }))
-  }
+  const handleWeekChange = (currentWeek: number) => {
+    dispatch(getWeek.success({ currentWeek }));
+  };
 
   const markMyself = async () => {
     try {
-      await api.markMyself(+userId)()
+      await api.markMyself(+userId)();
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
 
   return (
     <div className="flex flex-col w-full px-6 py-4 gap-3">
@@ -74,9 +78,20 @@ export const InfiniteDateTable: FC<InfiniteDateTableProps> = ({ columns }) => {
           <span className="ml-9 font-semibold self-center">
             Current week: <span className="font-bold">{currentWeek}</span>
           </span>
-          <Dropdown title="Weeks" buttonTitle="Select week" items={WEEKS_LIST} onChange={handleWeekChange} />
+          <Dropdown
+            title="Weeks"
+            buttonTitle="Select week"
+            items={WEEKS_LIST}
+            onChange={handleWeekChange}
+          />
         </div>
-        <Button variant="outline" className="w-24 h-8 mr-10 dark:bg-black" onClick={markMyself}>Mark myself</Button>
+        <Button
+          variant="outline"
+          className="w-24 h-8 mr-10 dark:bg-black"
+          onClick={markMyself}
+        >
+          Mark myself
+        </Button>
       </div>
       <div className="flex flex-row w-full">
         <ChevronLeft
