@@ -1,3 +1,5 @@
+import { ACCESS_TYPES } from "./constants";
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   ATTENDANCE: {
@@ -16,5 +18,9 @@ export default {
   MEDICAL_CERTIFICATION: {
     GET_CERTIFICATIONS: (studentId: number) => `${process.env.NEXT_PUBLIC_API_URL}/medical-certification/${studentId}`,
     RESOLVE_CERTIFICATIONS: () => `${process.env.NEXT_PUBLIC_API_URL}/medical-certification`
+  },
+  PROFILE: {
+    GET_PROFILE: (userId: number, role: ACCESS_TYPES) => `${process.env.NEXT_PUBLIC_API_URL}/user/get-profile/${userId}/${role}`,
+    UPDATE_PROFILE: () => `${process.env.NEXT_PUBLIC_API_URL}/user/update-profile`
   }
 }

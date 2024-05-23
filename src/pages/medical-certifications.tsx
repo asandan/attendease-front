@@ -11,14 +11,14 @@ export default function MedicalCertifications() {
         desc="Upload medical certification"
         title="Medical certifications"
       />
-      {/* <WithBreadcrumbs
+      <WithBreadcrumbs
         href="/medical-certifications"
         label="Medical certifications"
-      > */}
+      >
         <div className="flex justify-center items-center h-full">
           <MedicalCertificationForm />
         </div>
-      {/* </WithBreadcrumbs> */}
+      </WithBreadcrumbs>
     </>
   );
 }

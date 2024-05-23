@@ -5,7 +5,7 @@ import {
   API,
   getListValue,
   getSelectList,
-  HandleMedicalCertificationChange,
+  HandleChange,
   METHODS,
   withSession,
 } from "@/shared";
@@ -20,7 +20,6 @@ import {
 import { selectors as medicalCertificationSelector } from "@/shared/store/stores/medical-certification-store";
 import medicalCertificationSchema from "./schema/medical-certification.schema";
 import { useQuery } from "@tanstack/react-query";
-import request from "@/shared/util/request";
 import { useSession } from "next-auth/react";
 import { api } from "@/api";
 import { InputFile } from "@/components/InputFile";
@@ -59,7 +58,7 @@ export const MedicalCertificationForm = () => {
     initialValues: { ...medicalCertificationsStore },
     enableReinitialize: true,
     validationSchema: medicalCertificationSchema,
-    onSubmit: async (e) => {
+    onSubmit: async () => {
       const formData = new FormData();
 
       formData.append("image", file);
@@ -89,7 +88,7 @@ export const MedicalCertificationForm = () => {
     },
   });
 
-  const handleChange: HandleMedicalCertificationChange = (name, value) => {
+  const handleChange: HandleChange = (name, value) => {
     dispatch(getMedicalCertification.success({ name, value }));
   };
 

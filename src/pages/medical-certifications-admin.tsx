@@ -1,4 +1,4 @@
-import { MedicalCertificationsAdminForm } from "@/components/Forms/MedicalCertificationsAdmin/MedicalCertificationAdmin";
+import { MedicalCertificationsAdminForm } from "@/components/Forms/MedicalCertificationsAdmin/MedicalCertificationAdminForm";
 import { SEOHead } from "@/components/SEO";
 import { WithBreadcrumbs } from "@/components/WithBreadcrumbs";
 

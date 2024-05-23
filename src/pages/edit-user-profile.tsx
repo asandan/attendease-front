@@ -1,15 +1,15 @@
-import { ProfileForm } from "@/components/Forms/Profile";
+import { EditUserProfileForm } from "@/components/Forms/EditUserProfile";
 import { SEOHead } from "@/components/SEO";
 import { WithBreadcrumbs } from "@/components/WithBreadcrumbs";
 import { withSession } from "@/shared";
 
-export default function MyProfile() {
+export default function EditUserProfile() {
   return (
     <>
-      <SEOHead title="My profile" desc="My profile" />
-      <WithBreadcrumbs href="/my-profile" label="My profile">
+      <SEOHead desc="Edit teacher or student data" title="Edit user profile" />
+      <WithBreadcrumbs href="/edit-user-profile" label="Edit user profile">
         <div className="flex flex-col justify-center h-full items-center">
-          <ProfileForm />
+          <EditUserProfileForm />
         </div>
       </WithBreadcrumbs>
     </>

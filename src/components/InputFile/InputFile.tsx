@@ -1,10 +1,10 @@
 import { FC, forwardRef, LegacyRef, MutableRefObject, Ref } from "react";
 import { Input } from "../ui";
-import { HandleMedicalCertificationChange } from "@/shared";
+import { HandleChange } from "@/shared";
 import { Label } from "../ui/label";
 
 export type InputFileProps = {
-  handleChange: HandleMedicalCertificationChange;
+  handleChange: HandleChange;
   ref?: LegacyRef<HTMLInputElement>;
 };
 export const InputFile: FC<InputFileProps> = forwardRef(

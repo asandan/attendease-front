@@ -6,6 +6,7 @@ import {
   Calendar,
   FileText,
   FileCheck2,
+  FilePenLine,
 } from "lucide-react";
 import { ACCESS_TYPES } from "./constants";
 
@@ -33,6 +34,12 @@ export const LINKS: Link[] = [
     title: "Medical certifications",
     url: "/medical-certifications",
     icon: <FileText />,
+    accessType: ACCESS_TYPES.ALL,
+  },
+  {
+    title: "Edit user data",
+    url: "/edit-user-profile",
+    icon: <FilePenLine />,
     accessType: ACCESS_TYPES.ALL,
   },
   {

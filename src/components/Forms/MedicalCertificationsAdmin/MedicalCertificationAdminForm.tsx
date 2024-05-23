@@ -11,7 +11,7 @@ import {
   getListValue,
   getReadableDate,
   getSelectList,
-  HandleMedicalCertificationChange,
+  HandleChange,
   ITEMS_PER_PAGE,
   List,
   MedicalCertificationResponse,
@@ -129,7 +129,7 @@ export const MedicalCertificationsAdminForm = () => {
     );
   }, [medicalCertificationsData?.data, dispatch]);
 
-  const handleChange: HandleMedicalCertificationChange = (name, value) => {
+  const handleChange: HandleChange = (name, value) => {
     dispatch(getMedicalCertificationAdminData.success({ name, value }));
   };
 

@@ -1,1 +1,1 @@
-export { MedicalCertificationsAdminForm } from './MedicalCertificationAdmin';
+export { MedicalCertificationsAdminForm } from './MedicalCertificationAdminForm';

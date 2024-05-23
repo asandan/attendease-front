@@ -6,13 +6,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { HandleMedicalCertificationChange } from "@/shared";
+import { HandleChange } from "@/shared";
 import { FC } from "react";
 
 export type PaginationProps = {
   totalPages: number;
   activePage: number;
-  handleChange: HandleMedicalCertificationChange;
+  handleChange: HandleChange;
 };
 
 export const Pagination: FC<PaginationProps> = ({

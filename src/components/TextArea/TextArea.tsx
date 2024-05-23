@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { Label } from "../ui/label";
 import { Textarea as TextareaComponent } from "../ui/textarea";
-import { HandleMedicalCertificationChange } from "@/shared";
+import { HandleChange } from "@/shared";
 
 export type TextAreaProps = {
   label: string;
-  handleChange: HandleMedicalCertificationChange;
+  handleChange: HandleChange;
   value: string;
 };
 

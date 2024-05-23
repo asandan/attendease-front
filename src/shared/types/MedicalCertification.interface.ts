@@ -1,4 +1,4 @@
-import { CERTIFICATE_STATUSES } from "../util";
+import { ACCESS_TYPES, CERTIFICATE_STATUSES } from "../util";
 
 export interface MedicalCertificationState {
   startDate: Date | undefined;
@@ -37,4 +37,18 @@ export interface MedicalCertificationResponse {
 export interface MedicalCertificationRequest {
   id: number;
   status: CERTIFICATE_STATUSES
+}
+
+export interface GetProfileRequest {
+  id: number;
+  role: ACCESS_TYPES;
+}
+
+export interface UpdateProfileRequest {
+  id: number;
+  role: ACCESS_TYPES;
+  email?: string;
+  password?: string;
+  groupId?: number;
+  subjectId?: number;
 }

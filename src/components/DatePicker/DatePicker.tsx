@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/popover";
 import { FC } from "react";
 import { Label } from "@/components/ui/label";
-import { AppSubStates, HandleMedicalCertificationChange } from "@/shared";
+import { AppSubStates, HandleChange } from "@/shared";
 
 export type DatePickerProps = {
   date: Date | undefined;
-  handleChange: HandleMedicalCertificationChange;
+  handleChange: HandleChange;
   label: string;
   state: AppSubStates;
   isValid?: boolean;

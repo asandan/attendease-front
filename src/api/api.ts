@@ -1,4 +1,4 @@
-import { API, GetAttendanceRowsRequest, MedicalCertificationRequest, METHODS } from "@/shared";
+import { API, GetAttendanceRowsRequest, GetProfileRequest, MedicalCertificationRequest, METHODS, UpdateProfileRequest } from "@/shared";
 import request from "@/shared/util/request";
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -10,4 +10,6 @@ export default {
   getStudents: (groupId: number, skip = 0, take = 1000) => request(METHODS.GET, API.STUDENT.GET_STUDENTS(groupId, skip, take)),
   getMedicalCertifications: (studentId: number) => request(METHODS.GET, API.MEDICAL_CERTIFICATION.GET_CERTIFICATIONS(studentId)),
   resolveMedicalCertifications: (payload: MedicalCertificationRequest[]) => request(METHODS.PUT, API.MEDICAL_CERTIFICATION.RESOLVE_CERTIFICATIONS(), payload)(),
+  getProfile: (payload: GetProfileRequest) => request(METHODS.GET, API.PROFILE.GET_PROFILE(payload.id, payload.role)),
+  updateProfile: (payload: UpdateProfileRequest) => request(METHODS.PUT, API.PROFILE.UPDATE_PROFILE(), payload)(),
 }

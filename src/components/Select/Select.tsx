@@ -12,7 +12,7 @@ import { Label } from "../ui/label";
 import {
   AppState,
   AppSubStates,
-  HandleMedicalCertificationChange,
+  HandleChange,
   MedicalCertificationAdminState,
   MedicalCertificationState,
 } from "@/shared";
@@ -32,7 +32,7 @@ export type SelectProps = {
   withTopLabel?: boolean;
   defaultValue?: string;
   handleChange:
-    | HandleMedicalCertificationChange
+    | HandleChange
     | ((name: string, status: string) => void);
   paintItems?: (criteria: any) => string;
 };

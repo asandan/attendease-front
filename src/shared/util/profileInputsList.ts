@@ -1,58 +1,91 @@
-export const PROFILE_INPUTS = [
+import { AppSubStates, ProfileState } from "../types";
+import { ACCESS_TYPES } from "./constants";
+
+export type ProfileInputParams = {
+  id: keyof ProfileState;
+  label: string;
+  placeholder: string;
+  type: string;
+  canEdit?: ACCESS_TYPES[];
+  value?: string;
+  state?: AppSubStates;
+  role?: ACCESS_TYPES;
+}
+
+export const PROFILE_INPUTS: ProfileInputParams[] = [
   {
     id: "name",
     label: "Name",
-    placeholder: "Asan",
+    placeholder: "Enter your name",
     type: "text",
-    disabled: true,
+    canEdit: [ACCESS_TYPES.ADMIN],
+    role: ACCESS_TYPES.ALL,
   },
   {
     id: "surname",
     label: "Surname",
-    placeholder: "Danybayev",
+    placeholder: "Enter your surname",
     type: "text",
-    disabled: true,
+    canEdit: [ACCESS_TYPES.ADMIN],  
+    role: ACCESS_TYPES.ALL,
   },
   {
     id: "email",
     label: "Email",
-    placeholder: "asan.dan.2121@mail.ru",
+    placeholder: "Enter your email",
     type: "email",
-    disabled: true,
+    state: "email",
+    canEdit: [ACCESS_TYPES.ALL],  
+    role: ACCESS_TYPES.ALL,
   },
   {
-    id: "old-password",
+    id: "oldPassword",
     label: "Old password",
-    placeholder: "Information Systems B42",
+    placeholder: "Enter your old password",
     type: "password",
-    value: "qweewq",
+    state: "oldPassword",
+    canEdit: [ACCESS_TYPES.ALL],  
+    role: ACCESS_TYPES.ALL,
   },
   {
-    id: "new-password",
+    id: "newPassword",
     label: "New password",
-    placeholder: "Information Systems B42",
+    placeholder: "Enter your new password",
     type: "password",
-    value: "qweewq",
+    state: "newPassword",
+    canEdit: [ACCESS_TYPES.ALL],  
+    role: ACCESS_TYPES.ALL,
   },
   {
     id: "group",
     label: "Group",
-    placeholder: "SIS-2201",
+    placeholder: "Choose your group",
     type: "text",
-    disabled: true,
+    canEdit: [],
+    role: ACCESS_TYPES.STUDENT,
   },
   {
     id: "faculty",
     label: "Faculty",
-    placeholder: "Information Technologies",
+    placeholder: "Choose your faculty",
     type: "text",
-    disabled: true,
+    canEdit: [],
+    role: ACCESS_TYPES.STUDENT,
   },
   {
     id: "ep",
     label: "Education program",
-    placeholder: "Information Systems B42",
+    placeholder: "Enter your Education program",
     type: "text",
-    disabled: true,
+    canEdit: [],
+    role: ACCESS_TYPES.STUDENT,
   },
+  {
+    id: "subject",
+    label: "Subject",
+    placeholder: "Enter your subject",
+    type: "text",
+    canEdit: [],
+    role: ACCESS_TYPES.TEACHER,
+  }
 ];

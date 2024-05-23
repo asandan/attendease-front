@@ -20,6 +20,7 @@ export const METHODS = {
 export enum ACCESS_TYPES {
   STUDENT = "STUDENT",
   ADMIN = "ADMIN",
+  TEACHER = "TEACHER",
   ALL = "ALL",
 }
 

@@ -1,9 +1,10 @@
-import {
-  GetNextWeek,
-  WeekColumn,
-} from "@/shared/types/Week.interface";
+import { GetNextWeek, WeekColumn } from "@/shared/types/Week.interface";
 import { createColumnHelper } from "@tanstack/react-table";
-import { GetAttendanceRowsResponse, WEEK_DAYS, getColorByPercentage } from "@/shared";
+import {
+  GetAttendanceRowsResponse,
+  WEEK_DAYS,
+  getColorByPercentage,
+} from "@/shared";
 
 export const dayColumnHelper = createColumnHelper<GetAttendanceRowsResponse>();
 
@@ -13,9 +14,7 @@ export const DAYS_DEFAULT_COLUMN = [
     cell(props) {
       const value = props.getValue();
       if (!value) return "N/A";
-      return (
-        <span className="font-semibold">{value}</span>
-      );
+      return <span className="font-semibold">{value}</span>;
     },
   }),
 ];
