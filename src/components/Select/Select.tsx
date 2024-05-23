@@ -55,9 +55,7 @@ export const Select: FC<SelectProps> = ({
     value || defaultValue,
     "font-semibold"
   );
-  console.log(value, defaultValue);
   const placeholder = `Select ${label.toLowerCase()}`;
-  console.log(value || placeholder);
   return (
     <div className={`${containerWidth} flex flex-col gap-1.5`}>
       {withTopLabel && <Label>{label}</Label>}

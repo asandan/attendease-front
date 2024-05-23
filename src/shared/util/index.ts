@@ -11,4 +11,5 @@ export * from './getListValue';
 export * from './getColorByStatus';
 export * from './getReadableDate';
 export * from './lists';
+export * from './profileInputsList'
 export { default as API} from './api';

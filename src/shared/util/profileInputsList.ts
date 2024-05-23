@@ -1,0 +1,58 @@
+export const PROFILE_INPUTS = [
+  {
+    id: "name",
+    label: "Name",
+    placeholder: "Asan",
+    type: "text",
+    disabled: true,
+  },
+  {
+    id: "surname",
+    label: "Surname",
+    placeholder: "Danybayev",
+    type: "text",
+    disabled: true,
+  },
+  {
+    id: "email",
+    label: "Email",
+    placeholder: "asan.dan.2121@mail.ru",
+    type: "email",
+    disabled: true,
+  },
+  {
+    id: "old-password",
+    label: "Old password",
+    placeholder: "Information Systems B42",
+    type: "password",
+    value: "qweewq",
+  },
+  {
+    id: "new-password",
+    label: "New password",
+    placeholder: "Information Systems B42",
+    type: "password",
+    value: "qweewq",
+  },
+  {
+    id: "group",
+    label: "Group",
+    placeholder: "SIS-2201",
+    type: "text",
+    disabled: true,
+  },
+  {
+    id: "faculty",
+    label: "Faculty",
+    placeholder: "Information Technologies",
+    type: "text",
+    disabled: true,
+  },
+  {
+    id: "ep",
+    label: "Education program",
+    placeholder: "Information Systems B42",
+    type: "text",
+    disabled: true,
+  },
+];

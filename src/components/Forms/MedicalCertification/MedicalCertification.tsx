@@ -12,7 +12,6 @@ import {
 import axios from "axios";
 import { useFormik } from "formik";
 import { ForwardedRef, LegacyRef, Ref, useRef, useState } from "react";
-import { TextArea } from "../TextArea";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearMedicalCertificationState,
@@ -24,11 +23,12 @@ import { useQuery } from "@tanstack/react-query";
 import request from "@/shared/util/request";
 import { useSession } from "next-auth/react";
 import { api } from "@/api";
-import { InputFile } from "../InputFile";
+import { InputFile } from "@/components/InputFile";
+import { TextArea } from "@/components/TextArea";
 
-export const MedicalCertification = () => {
+export const MedicalCertificationForm = () => {
   const dispatch = useDispatch();
-  const ref = useRef<any>(null) ;
+  const ref = useRef<any>(null);
 
   const medicalCertificationsStore = useSelector(
     medicalCertificationSelector.getMedicalCertification()
@@ -48,7 +48,8 @@ export const MedicalCertification = () => {
 
   const subjects = getSelectList(data?.data.data || []);
 
-  const { file, description, startDate, endDate, subjectId } = medicalCertificationsStore;
+  const { file, description, startDate, endDate, subjectId } =
+    medicalCertificationsStore;
 
   const session = useSession() as any;
 
@@ -56,7 +57,6 @@ export const MedicalCertification = () => {
 
   const { values, isSubmitting, handleSubmit } = useFormik({
     initialValues: { ...medicalCertificationsStore },
-    isInitialValid: false,
     enableReinitialize: true,
     validationSchema: medicalCertificationSchema,
     onSubmit: async (e) => {
@@ -65,7 +65,8 @@ export const MedicalCertification = () => {
       formData.append("image", file);
       formData.append("userId", `${userId}`);
       formData.append("description", description);
-
+      if (endDate) formData.append("endDate", endDate.toISOString());
+      if (startDate) formData.append("startDate", startDate.toISOString());
       try {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/medical-certification`,
@@ -93,7 +94,11 @@ export const MedicalCertification = () => {
   };
 
   const isValid =
-    values.startDate && values.endDate && values.description && values.file && values.subjectId;
+    values.startDate &&
+    values.endDate &&
+    values.description &&
+    values.file &&
+    values.subjectId;
 
   const value = getListValue(subjects, subjectId);
 
@@ -109,8 +114,18 @@ export const MedicalCertification = () => {
         state="subjectId"
         label="Subject"
       />
-      <DatePicker date={startDate} handleChange={handleChange} label="Start date" state="startDate"/>
-      <DatePicker date={endDate} handleChange={handleChange} label="End date" state="endDate" />
+      <DatePicker
+        date={startDate}
+        handleChange={handleChange}
+        label="Start date"
+        state="startDate"
+      />
+      <DatePicker
+        date={endDate}
+        handleChange={handleChange}
+        label="End date"
+        state="endDate"
+      />
       <InputFile handleChange={handleChange} ref={ref} />
       <TextArea
         handleChange={handleChange}

@@ -37,7 +37,7 @@ export const LINKS: Link[] = [
   },
   {
     title: "My profile",
-    url: "/user-profile",
+    url: "/my-profile",
     icon: <CircleUserRound />,
     accessType: ACCESS_TYPES.ALL,
   },

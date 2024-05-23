@@ -5,11 +5,12 @@ import { useLogout } from "../../shared/hooks";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { useToast } from "../ui/use-toast";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export const NavBar = (props: any) => {
   const logOut = useLogout();
   const { toast } = useToast();
-
+  const { pathname } = useRouter();
   const session = useSession() as any;
 
   const userRole =
@@ -36,13 +37,17 @@ export const NavBar = (props: any) => {
             <span className="sr-only">Sign Out</span>
           </button>
           {LINKS.map(({ accessType, url, icon, title }) => {
+            const isActive = pathname === url;
+
             return userRole === accessType ||
               accessType === ACCESS_TYPES.ALL ? (
               <Tooltip key={url}>
                 <TooltipTrigger asChild>
                   <Link
                     href={url}
-                    className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                    className={`flex h-9 w-9 items-center p-[5px] justify-center rounded-lg ${
+                      isActive && "bg-[#2f2f33]"
+                    } text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8`}
                   >
                     {icon}
                     <span className="sr-only">{title}</span>

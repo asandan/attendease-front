@@ -14,7 +14,7 @@ export const DAYS_DEFAULT_COLUMN = [
       const value = props.getValue();
       if (!value) return "N/A";
       return (
-        <span className="font-semibold">{value as unknown as string}</span>
+        <span className="font-semibold">{value}</span>
       );
     },
   }),
@@ -28,7 +28,7 @@ export const getColumnDefs: GetNextWeek<WeekColumn> = () => {
       header: WEEK_DAYS[day],
       cell(props) {
         const value = props.getValue() as number;
-        if (!value) {
+        if (!value && value !== 0) {
           return <span className="font-semibold text-gray-400 ">N/A</span>;
         }
         return (
@@ -37,7 +37,7 @@ export const getColumnDefs: GetNextWeek<WeekColumn> = () => {
               +value
             )}`}
           >
-            <span>{+value * 100}%</span>
+            <span>{+value.toFixed(1) * 100}%</span>
           </span>
         );
       },

@@ -13,6 +13,7 @@ const reducer = createReducer<typeof DEFAULT_WEEK_STATE, ActionType<typeof actio
   .handleAction(actions.getWeek.success, (state, action) => produce(state, (nextState) => {
     const { payload } = action
     nextState.currentWeek = payload?.currentWeek
+    console.log(payload)
   }))
   .handleAction(actions.getRows.success, (state, action) => produce(state, (nextState) => {
     const { payload } = action

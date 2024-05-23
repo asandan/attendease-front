@@ -1,5 +1,5 @@
 import { Table } from "../Table";
-import { FC, MouseEvent, useEffect } from "react";
+import { FC, MouseEvent, useEffect, useMemo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   ColumnDef,
@@ -31,16 +31,21 @@ export const InfiniteDateTable: FC<InfiniteDateTableProps> = ({ columns }) => {
   const session = useSession() as any;
   const userId = session.data.user.id;
 
+  const { data: rows } = useQuery<{ data: GetAttendanceRowsResponse[] }>({
+    queryKey: ["attendance-rows", currentWeek],
+    queryFn: api.getAttendanceRows({ userId, currentWeek }),
+  });
 
-  // const { data: rows } = useQuery<{ data: GetAttendanceRowsResponse[] }>({
-  //   queryKey: ["attendance-rows", currentWeek],
-  //   queryFn: api.getAttendanceRows({ userId, currentWeek }),
-  // });
+  const attendanceListMemo = useMemo(
+    () => rows?.data || [],
+    [rows?.data]
+  );
 
   const data = useReactTable({
-    data: [] || [],
+    data: attendanceListMemo,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
+    debugTable: true,
   });
 
   const handleClick = (
@@ -99,7 +104,7 @@ export const InfiniteDateTable: FC<InfiniteDateTableProps> = ({ columns }) => {
           data-direction="left"
           onClick={handleClick}
         />
-        <div className="flex flex-row border rounded-lg px-4 py-2 w-full">
+        <div className="flex flex-row border border-slate-400 rounded-lg px-4 py-2 w-full">
           <Table table={data} />
         </div>
         <ChevronRight
