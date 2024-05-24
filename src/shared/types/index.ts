@@ -9,6 +9,7 @@ export * from './Attendance.interface';
 export * from './Pagination.interface';
 export * from './SEO.interface';
 export * from './Profile.interface';
+export * from './MarkStudent.interface'
 export * from './utilTypes';
 export * from './functions';
 export * from './common';

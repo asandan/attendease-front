@@ -7,6 +7,7 @@ import { reducer as medicalCertificationAdminReducer } from '@/shared/store/stor
 import { reducer as paginationReducer } from '@/shared/store/stores/pagination-store'
 import { reducer as profileReducer } from '@/shared/store/stores/profile-store'
 import { reducer as editProfileReducer } from '@/shared/store/stores/edit-user-profile-store'
+import { reducer as markStudentReducer } from '@/shared/store/stores/mark-student-store'
 import { AppState } from '@/shared/types/State.interface';
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -18,7 +19,8 @@ export default () => {
     medicalCertificationAdmin: medicalCertificationAdminReducer,
     pagination: paginationReducer,
     profile: profileReducer,
-    editProfile: editProfileReducer
+    editProfile: editProfileReducer,
+    markStudent: markStudentReducer,
   })
 
   return (state: AppState | undefined, action: AnyAction & { payload: any }) => {

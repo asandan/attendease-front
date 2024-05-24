@@ -39,16 +39,3 @@ export interface MedicalCertificationRequest {
   status: CERTIFICATE_STATUSES
 }
 
-export interface GetProfileRequest {
-  id: number;
-  role: ACCESS_TYPES;
-}
-
-export interface UpdateProfileRequest {
-  id: number;
-  role: ACCESS_TYPES;
-  email?: string;
-  password?: string;
-  groupId?: number;
-  subjectId?: number;
-}
