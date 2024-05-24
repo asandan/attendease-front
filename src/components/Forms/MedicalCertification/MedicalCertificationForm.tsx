@@ -5,6 +5,7 @@ import {
   API,
   getListValue,
   getSelectList,
+  getWeeksPassed,
   HandleChange,
   METHODS,
   withSession,
@@ -49,6 +50,10 @@ export const MedicalCertificationForm = () => {
 
   const { file, description, startDate, endDate, subjectId } =
     medicalCertificationsStore;
+
+  const fileSize = (((file as any).size as any) / 1048576).toFixed(2);
+
+  console.log(fileSize);
 
   const session = useSession() as any;
 
@@ -113,22 +118,53 @@ export const MedicalCertificationForm = () => {
         state="subjectId"
         label="Subject"
       />
-      <DatePicker
-        date={startDate}
-        handleChange={handleChange}
-        label="Start date"
-        state="startDate"
-      />
-      <DatePicker
-        date={endDate}
-        handleChange={handleChange}
-        label="End date"
-        state="endDate"
-      />
-      <InputFile handleChange={handleChange} ref={ref} />
+      <div className="flex flex-col w-full">
+        <DatePicker
+          date={startDate}
+          handleChange={handleChange}
+          label="Start date"
+          state="startDate"
+        />
+        {startDate && endDate && (
+          <div className="flex self-start mt-5 font-semibold">
+            <span>Week: {getWeeksPassed(startDate)}</span>
+          </div>
+        )}
+      </div>
+      <div className="flex flex-col w-full">
+        <DatePicker
+          date={endDate}
+          handleChange={handleChange}
+          label="End date"
+          state="endDate"
+        />
+        {startDate && endDate && typeof endDate !== "string" && (
+          <div className="flex self-start mt-5 font-semibold">
+            <span>Week: {getWeeksPassed(endDate)}</span>
+          </div>
+        )}
+      </div>
+      {endDate && typeof endDate === "string" && endDate === "error" && (
+        <span className="self-start font-semibold text-red-400">
+          End date goes earlier that start date
+        </span>
+      )}
+      <div className="flex flex-col w-full font-semibold">
+        <InputFile handleChange={handleChange} ref={ref} />
+        {!isNaN(+fileSize) ? (
+          fileSize && +fileSize < 0.06 ? (
+            <span className="mt-3 text-green-400">{fileSize}MB</span>
+          ) : (
+            <span className="mt-3 text-red-400">File is too big</span>
+          )
+        ) : (
+          <></>
+        )}
+        {}
+      </div>
       <TextArea
         handleChange={handleChange}
-        label="Description"
+        label="Reason description"
         value={description}
       />
       <Button

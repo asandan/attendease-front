@@ -67,7 +67,6 @@ export const authOptions: AuthOptions = {
         token.surname = user.surname
       }
 
-      console.log("TOKEN", token)
       return Promise.resolve(token);
     },
     async session({ session, token }) {

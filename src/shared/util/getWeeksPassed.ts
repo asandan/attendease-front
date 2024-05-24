@@ -1,6 +1,7 @@
 import { DAY, SECOND_SEMESTER_START_DATE } from "./constants";
 
-export const getWeeksPassed = (endDate: Date): number => {
+export const getWeeksPassed = (endDate: Date | "error"): number | "error" => {
+  if (endDate === "error") return endDate
   const timeDiff = Math.abs(endDate.getTime() - SECOND_SEMESTER_START_DATE.getTime());
   const weeksPassedSinceDate = Math.floor(timeDiff / (DAY * 7));
 

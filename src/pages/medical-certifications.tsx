@@ -8,12 +8,12 @@ export default function MedicalCertifications() {
   return (
     <>
       <SEOHead
-        desc="Upload medical certification"
-        title="Medical certifications"
+        desc="Upload medical certification and get approval by reason."
+        title="Absense reason"
       />
       <WithBreadcrumbs
         href="/medical-certifications"
-        label="Medical certifications"
+        label="Absence reason"
       >
         <div className="flex justify-center items-center h-full">
           <MedicalCertificationForm />

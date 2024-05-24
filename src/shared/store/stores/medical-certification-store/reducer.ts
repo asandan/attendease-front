@@ -14,7 +14,17 @@ export const DEFAULT_MEDICAL_CERTIFICATIONS_STATE: MedicalCertificationState = {
 const reducer = createReducer<typeof DEFAULT_MEDICAL_CERTIFICATIONS_STATE, ActionType<typeof actions>>(DEFAULT_MEDICAL_CERTIFICATIONS_STATE)
   .handleAction(actions.getMedicalCertification.success, (state, action) => produce(state, (nextState) => {
     const stateName = action.payload.name as keyof MedicalCertificationState
-    nextState[stateName] = action.payload.value
+    console.log(nextState)
+    if (stateName === "endDate" && nextState.startDate) {
+      console.log(action.payload.value.getTime() > nextState.startDate.getTime(), action.payload.value.getTime(), nextState.startDate.getTime())
+      if (action.payload.value.getTime() > nextState.startDate.getTime()) {
+        nextState.endDate = action.payload.value
+      } else {
+        nextState.endDate = "error" as any
+      }
+    } else {
+      nextState[stateName] = action.payload.value
+    }
   }))
   .handleAction(actions.clearMedicalCertificationState.success, (state, _) => produce(state, (nextState) => {
     nextState.startDate = DEFAULT_MEDICAL_CERTIFICATIONS_STATE.startDate;

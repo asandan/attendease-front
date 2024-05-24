@@ -10,7 +10,7 @@ export type InputFileProps = {
 export const InputFile: FC<InputFileProps> = forwardRef(
   ({ handleChange }, ref) => {
     return (
-      <div className="grid w-full max-w-sm items-center gap-1.5">
+      <div className="grid w-[280px] items-center gap-1.5">
         <Label htmlFor="picture" className="font-semibold">
           File
         </Label>
