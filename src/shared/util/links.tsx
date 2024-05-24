@@ -7,6 +7,7 @@ import {
   FileText,
   FileCheck2,
   FilePenLine,
+  UserCheck,
 } from "lucide-react";
 import { ACCESS_TYPES } from "./constants";
 
@@ -46,6 +47,12 @@ export const LINKS: Link[] = [
     title: "My profile",
     url: "/my-profile",
     icon: <CircleUserRound />,
+    accessType: ACCESS_TYPES.ALL,
+  },
+  {
+    title: "Mark student",
+    url: "/mark-student",
+    icon: <UserCheck />,
     accessType: ACCESS_TYPES.ALL,
   },
   {

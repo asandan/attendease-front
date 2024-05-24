@@ -123,7 +123,7 @@ export const ProfileForm = () => {
   const profileInputs = getProfileInputs(role);
 
   const isValid = !Object.keys(errors).length;
-  
+
   return (
     <form
       className="flex flex-col items-center w-[23%] gap-5"
@@ -134,9 +134,9 @@ export const ProfileForm = () => {
           key={input.id}
           error={(touched as any)[input.id] && !!(errors as any)[input.id]}
           errorMessage={(errors as any)[input.id]}
+          handleBlur={handleBlur}
           handleChange={handleChange}
           value={profileStore[input.id]}
-          handleBlur={handleBlur}
           disabled={!input.canEdit}
           {...input}
         />

@@ -5,10 +5,14 @@ const axiosInstance: AxiosInstance = axios.create();
 
 const makeRequest = (instance: AxiosInstance) => (method: string, url: string, body: string) => {
   const credentials = btoa(`${process.env.BASIC_AUTH_USER}:${process.env.BASIC_AUTH_PASS}`);
-  instance.defaults.headers.common.Authorization = `Basic ${credentials}`;
-
+  instance.defaults.headers.authorization = `Basic ${credentials}`;
+  console.log(instance.defaults.headers.authorization)
   // @ts-ignore
-  return instance[method](url, body)
+  return instance[method](url, body, {
+    headers: {
+      authorization: `Basic ${credentials}`
+    }
+  })
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export

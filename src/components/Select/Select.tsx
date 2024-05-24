@@ -31,9 +31,7 @@ export type SelectProps = {
   containerWidth?: string;
   withTopLabel?: boolean;
   defaultValue?: string;
-  handleChange:
-    | HandleChange
-    | ((name: string, status: string) => void);
+  handleChange: HandleChange | ((name: string, status: string) => void);
   paintItems?: (criteria: any) => string;
 };
 
@@ -55,7 +53,8 @@ export const Select: FC<SelectProps> = ({
     value || defaultValue,
     "font-semibold"
   );
-  const placeholder = `Select ${label.toLowerCase()}`;
+  console.log("VALUE", value);
+  const placeholder = value || `Select ${label.toLowerCase()}`;
   return (
     <div className={`${containerWidth} flex flex-col gap-1.5`}>
       {withTopLabel && <Label>{label}</Label>}

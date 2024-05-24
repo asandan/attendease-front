@@ -1,3 +1,4 @@
+import { ACCESS_TYPES } from "../util";
 import { Account, Group } from "./common";
 
 export type ProfileState = {
@@ -33,5 +34,19 @@ export interface TeacherProfileResponse {
 export interface AdminProfileResponse {
   id: number;
   account: Account;
+}
+
+export interface GetProfileRequest {
+  id: number;
+  role: ACCESS_TYPES;
+}
+
+export interface UpdateProfileRequest {
+  id: number;
+  role: ACCESS_TYPES;
+  email?: string;
+  password?: string;
+  groupId?: number;
+  subjectId?: number;
 }
 

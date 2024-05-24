@@ -15,7 +15,7 @@ export type InputWithLabelProps = {
   error?: boolean | string;
   errorMessage?: string;
   handleChange: HandleChange;
-  handleBlur: {
+  handleBlur?: {
     (e: FocusEvent<any, Element>): void;
     <T = any>(fieldOrEvent: T): T extends string ? (e: any) => void : void;
   };

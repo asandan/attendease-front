@@ -1,6 +1,7 @@
 import { MedicalCertificationsAdminForm } from "@/components/Forms/MedicalCertificationsAdmin/MedicalCertificationAdminForm";
 import { SEOHead } from "@/components/SEO";
 import { WithBreadcrumbs } from "@/components/WithBreadcrumbs";
+import { withSession } from "@/shared";
 
 export default function MedicalCertificationAdmin() {
   return (
@@ -20,3 +21,7 @@ export default function MedicalCertificationAdmin() {
     </>
   );
 }
+
+export const getServerSideProps = withSession(async function ({ req, res }) {
+  return { props: {} };
+});
