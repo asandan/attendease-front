@@ -3,6 +3,12 @@ export * from './Response.interface';
 export * from './State.interface';
 export * from './Table.interface';
 export * from './Week.interface';
-export * from './User.interface'
-export * from './MedicalCertification.interface'
-export * from './functions'
+export * from './User.interface';
+export * from './MedicalCertification.interface';
+export * from './Attendance.interface';
+export * from './Pagination.interface';
+export * from './SEO.interface';
+export * from './Profile.interface';
+export * from './utilTypes';
+export * from './functions';
+export * from './common';

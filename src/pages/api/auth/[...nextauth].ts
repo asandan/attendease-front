@@ -12,8 +12,9 @@ export const authOptions: AuthOptions = {
       const jwtClaims = {
         id: token?.id,
         name: token?.name,
+        surname: token?.surname,
         email: token?.email,
-        roleId: token?.roleId,
+        role: token?.role,
       };
       return jwt.sign(jwtClaims, secret, {
         expiresIn: "1h",
@@ -58,10 +59,15 @@ export const authOptions: AuthOptions = {
         token.id = user.id;
       }
 
-      if (user?.roleId) {
-        token.roleId = user.roleId
+      if (user?.role) {
+        token.role = user.role
       }
-      console.log("OKEN", token)
+
+      if (user?.surname) {
+        token.surname = user.surname
+      }
+
+      console.log("TOKEN", token)
       return Promise.resolve(token);
     },
     async session({ session, token }) {

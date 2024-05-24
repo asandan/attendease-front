@@ -1,7 +1,9 @@
+import { ACCESS_TYPES } from "../util";
+
 export interface UserState {
   id: string;
   name?: string;
   email: string;
-  roleId: string;
+  role: ACCESS_TYPES | "";
   surname?: string;
 }

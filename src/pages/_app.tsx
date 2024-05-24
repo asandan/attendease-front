@@ -3,7 +3,6 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import configureStore from "@/shared/store/store";
-import { UserProvider } from "@/shared/user";
 import { QueryClient } from "@/shared/util/HOCs";
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
@@ -33,7 +32,6 @@ export default function App({
     <SessionProvider session={session}>
       <Provider store={store}>
         <QueryClient>
-          <UserProvider>
             <ThemeProvider
               attribute="class"
               defaultTheme="dark"
@@ -52,7 +50,6 @@ export default function App({
                 </div>
               </TooltipProvider>
             </ThemeProvider>
-          </UserProvider>
         </QueryClient>
       </Provider>
     </SessionProvider>

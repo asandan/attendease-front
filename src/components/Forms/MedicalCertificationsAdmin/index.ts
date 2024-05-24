@@ -1,0 +1,1 @@
+export { MedicalCertificationsAdminForm } from './MedicalCertificationAdminForm';
