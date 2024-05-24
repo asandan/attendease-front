@@ -17,10 +17,10 @@ import { useFormik } from "formik";
 import { skip } from "node:test";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import editProfileSchema from "./schema/edit-profile.schema";
 import { Button } from "@/components/ui";
 import { UpdateEditProfileRequest } from "@/shared/types/EditProfile.interface";
 import { useToast } from "@/components/ui/use-toast";
+import editProfileSchema from "./schema/edit-profile.schema";
 
 export const ROLE_LIST = [
   {

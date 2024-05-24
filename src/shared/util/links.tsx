@@ -55,18 +55,18 @@ export const LINKS: Link[] = [
     icon: <UserCheck />,
     accessType: ACCESS_TYPES.ALL,
   },
-  {
-    title: "About us",
-    url: "/about",
-    icon: <SearchSlash />,
-    accessType: ACCESS_TYPES.ALL,
-  },
-  {
-    title: "Contacts",
-    url: "/contact",
-    icon: <Contact />,
-    accessType: ACCESS_TYPES.ALL,
-  },
+  // {
+  //   title: "About us",
+  //   url: "/about",
+  //   icon: <SearchSlash />,
+  //   accessType: ACCESS_TYPES.ALL,
+  // },
+  // {
+  //   title: "Contacts",
+  //   url: "/contact",
+  //   icon: <Contact />,
+  //   accessType: ACCESS_TYPES.ALL,
+  // },
   {
     title: "Students medical certifications",
     url: "/medical-certifications-admin",

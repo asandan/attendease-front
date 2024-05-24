@@ -30,13 +30,14 @@ export const getColumnDefs: GetNextWeek<WeekColumn> = () => {
         if (!value && value !== 0) {
           return <span className="font-semibold text-gray-400 ">N/A</span>;
         }
+        const percentage = Math.min(+value.toFixed(1) * 100, 100);
         return (
           <span
             className={`flex flex-row font-semibold ${getColorByPercentage(
               +value
             )}`}
           >
-            <span>{+value.toFixed(1) * 100}%</span>
+            <span>{(percentage >= 100 ? 100: percentage)}%</span>
           </span>
         );
       },

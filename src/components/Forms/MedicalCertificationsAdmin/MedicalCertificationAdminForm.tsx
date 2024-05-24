@@ -244,7 +244,7 @@ export const MedicalCertificationsAdminForm = () => {
               );
             }
           )}
-          {dataToShow?.length && (
+          {!!dataToShow?.length && (
             <Pagination
               activePage={paginationStore.activePage}
               totalPages={paginationStore.totalPages}
