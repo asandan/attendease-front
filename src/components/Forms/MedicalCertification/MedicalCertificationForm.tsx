@@ -69,8 +69,10 @@ export const MedicalCertificationForm = () => {
       formData.append("image", file);
       formData.append("userId", `${userId}`);
       formData.append("description", description);
+      
       if (endDate) formData.append("endDate", endDate.toISOString());
       if (startDate) formData.append("startDate", startDate.toISOString());
+
       try {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/medical-certification`,

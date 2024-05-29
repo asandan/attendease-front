@@ -5,7 +5,7 @@ import * as actions from "./actions";
 import { getWeeksPassed } from "@/shared/util";
 
 export const DEFAULT_WEEK_STATE: WeekState = {
-  currentWeek: getWeeksPassed(new Date()),
+  currentWeek: getWeeksPassed(new Date()) as number,
   rows: [],
 }
 
